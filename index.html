@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infografía - Taller 3.4: Triggers - Versión Actualizada</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0c2461, #1e3799);
+            color: #333;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .infografia-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            border: 2px solid #ff9f1a;
+        }
+        
+        .header {
+            background: linear-gradient(to right, #0c2461, #1e3799);
+            color: white;
+            padding: 35px;
+            text-align: center;
+            border-bottom: 8px solid #ff9f1a;
+            position: relative;
+        }
+        
+        .header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, #ff9f1a, #ffd32a, #ff9f1a);
+        }
+        
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+            color: #ffd32a;
+        }
+        
+        .header h2 {
+            font-size: 1.9rem;
+            margin-bottom: 20px;
+            font-weight: 400;
+            color: #f5f5f5;
+        }
+        
+        .header .university {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #ffd32a;
+        }
+        
+        .header .faculty {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            font-weight: 500;
+            color: #e0e0e0;
+        }
+        
+        .info-section {
+            padding: 35px;
+        }
+        
+        .section-title {
+            color: #0c2461;
+            font-size: 2rem;
+            margin-bottom: 25px;
+            padding-bottom: 12px;
+            border-bottom: 4px solid #ff9f1a;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100px;
+            height: 4px;
+            background: #1e3799;
+        }
+        
+        .section-title i {
+            margin-right: 15px;
+            font-size: 2rem;
+            color: #ff9f1a;
+        }
+        
+        .card {
+            background: linear-gradient(to bottom right, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            padding: 28px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            border-left: 6px solid #1e3799;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, #ff9f1a, #ffd32a);
+        }
+        
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-title {
+            color: #0c2461;
+            font-size: 1.5rem;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+        }
+        
+        .card-title i {
+            margin-right: 12px;
+            color: #ff9f1a;
+        }
+        
+        .team-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin-bottom: 35px;
+            justify-content: center;
+        }
+        
+        .team-member {
+            flex: 1;
+            min-width: 220px;
+            background: linear-gradient(145deg, #e3f2fd, #bbdefb);
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(30, 55, 153, 0.2);
+            border: 2px solid #1e3799;
+            transition: all 0.3s ease;
+        }
+        
+        .team-member:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 20px rgba(30, 55, 153, 0.3);
+        }
+        
+        .team-member h3 {
+            color: #0c2461;
+            margin-bottom: 12px;
+            font-size: 1.3rem;
+        }
+        
+        .team-member p {
+            color: #333;
+            margin-bottom: 8px;
+        }
+        
+        .database-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .database-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            border-top: 6px solid;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .database-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .database-card.northwind {
+            border-top-color: #1e3799;
+        }
+        
+        .database-card.pubs {
+            border-top-color: #ff9f1a;
+        }
+        
+        .database-card h3 {
+            color: #0c2461;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            font-size: 1.4rem;
+        }
+        
+        .trigger-list {
+            list-style-type: none;
+        }
+        
+        .trigger-list li {
+            padding: 10px 0;
+            border-bottom: 1px dashed #ccc;
+            display: flex;
+            align-items: center;
+            transition: all 0.2s ease;
+        }
+        
+        .trigger-list li:hover {
+            background-color: rgba(255, 159, 26, 0.1);
+            padding-left: 10px;
+            border-radius: 5px;
+        }
+        
+        .trigger-list li:before {
+            content: "▶";
+            color: #ff9f1a;
+            margin-right: 12px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+        
+        .conclusion-card {
+            background: linear-gradient(to bottom right, #e8f5e9, #c8e6c9);
+            border-left: 6px solid #2e7d32;
+        }
+        
+        .conclusion-card .card-title {
+            color: #1b5e20;
+        }
+        
+        .footer {
+            background: linear-gradient(to right, #0c2461, #1e3799);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-top: 8px solid #ff9f1a;
+            position: relative;
+        }
+        
+        .footer::before {
+            content: "";
+            position: absolute;
+            top: -8px;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: linear-gradient(to right, #ff9f1a, #ffd32a, #ff9f1a);
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 35px;
+            margin-top: 25px;
+        }
+        
+        .footer-link {
+            color: white;
+            text-decoration: none;
+            background-color: rgba(255, 159, 26, 0.2);
+            padding: 12px 25px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 159, 26, 0.5);
+            font-weight: 500;
+        }
+        
+        .footer-link:hover {
+            background-color: rgba(255, 159, 26, 0.4);
+            transform: scale(1.08);
+            box-shadow: 0 5px 15px rgba(255, 159, 26, 0.3);
+        }
+        
+        .highlight {
+            background-color: #fff9c4;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: 700;
+            color: #0c2461;
+        }
+        
+        .code-example {
+            background-color: #263238;
+            color: #e0e0e0;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            margin: 18px 0;
+            overflow-x: auto;
+            border-left: 5px solid #ff9f1a;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        .keyword {
+            color: #ff9800;
+            font-weight: bold;
+        }
+        
+        .function {
+            color: #4fc3f7;
+        }
+        
+        .string {
+            color: #a5d6a7;
+        }
+        
+        .comment {
+            color: #78909c;
+        }
+        
+        .update-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(to right, #ff9f1a, #ffd32a);
+            color: #0c2461;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .trigger-count {
+            display: inline-block;
+            background: #ff9f1a;
+            color: #0c2461;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-left: 10px;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .header h2 {
+                font-size: 1.5rem;
+            }
+            
+            .info-section {
+                padding: 25px;
+            }
+            
+            .database-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="infografia-container">
+        <!-- Encabezado -->
+        <div class="header">
+            <h1><i class="fas fa-database"></i> Taller 3.4: Triggers</h1>
+            <h2>Modelado de Base de Datos - Versión Actualizada</h2>
+            <div class="university">UNIVERSIDAD ANDINA DEL CUSCO</div>
+            <div class="faculty">FACULTAD DE INGENIERÍA Y ARQUITECTURA</div>
+            <p>Docente: Hugo Espetia Huamanga</p>
+            <p>Cusco - Perú | 2025</p>
+            <div class="update-badge">VERSIÓN ACTUALIZADA</div>
+        </div>
+        
+        <!-- Contenido principal -->
+        <div class="info-section">
+            <!-- Equipo de desarrollo -->
+            <div class="section-title">
+                <i class="fas fa-users"></i> Equipo de Desarrollo: Los Dogs
+            </div>
+            
+            <div class="team-info">
+                <div class="team-member">
+                    <h3><i class="fas fa-user-graduate"></i> Huaman Sanchez Rivaldo</h3>
+                    <p><strong>Participación:</strong> 100%</p>
+                    <p><strong>Rol:</strong> Desarrollador y Documentador</p>
+                    <p><strong>Responsable:</strong> Triggers Northwind</p>
+                </div>
+                <div class="team-member">
+                    <h3><i class="fas fa-user-graduate"></i> Pancca Tinta Sergio Reynaldo</h3>
+                    <p><strong>Participación:</strong> 100%</p>
+                    <p><strong>Rol:</strong> Desarrollador y Probador</p>
+                    <p><strong>Responsable:</strong> Triggers Pubs</p>
+                </div>
+            </div>
+            
+            <!-- Introducción actualizada -->
+            <div class="section-title">
+                <i class="fas fa-info-circle"></i> Triggers: Automatización en Bases de Datos
+            </div>
+            
+            <div class="card">
+                <p>Los <span class="highlight">triggers (disparadores)</span> son objetos de base de datos que se ejecutan automáticamente en respuesta a eventos específicos sobre tablas. En este taller hemos implementado triggers para <span class="highlight">auditoría completa</span> en dos bases de datos diferentes.</p>
+                <p>La versión actualizada incluye mejoras en los triggers de eliminación y actualización, así como la corrección de errores detectados en la implementación anterior. Hemos asegurado el manejo adecuado de la <span class="highlight">integridad referencial</span> y la consistencia de datos.</p>
+            </div>
+            
+            <!-- Novedades de la versión actualizada -->
+            <div class="section-title">
+                <i class="fas fa-bullhorn"></i> Novedades en esta Versión
+            </div>
+            
+            <div class="card">
+                <div class="card-title">
+                    <i class="fas fa-sync-alt"></i> Mejoras Implementadas
+                </div>
+                <ul class="trigger-list">
+                    <li><strong>Triggers DELETE completos:</strong> Implementación correcta de TRG_Orders_Delete en Northwind</li>
+                    <li><strong>Corrección de tipos de datos:</strong> Ajuste de columnas como NCHAR(S) a NCHAR(5)</li>
+                    <li><strong>Manejo de integridad referencial:</strong> Eliminación en orden correcto (tablas hijas primero)</li>
+                    <li><strong>Triggers adicionales en Pubs:</strong> trg_insert_titles y trg_update_sales</li>
+                    <li><strong>Documentación mejorada:</strong> Resultados y explicaciones más detalladas</li>
+                    <li><strong>Pruebas exhaustivas:</strong> Verificación de todos los triggers implementados</li>
+                </ul>
+            </div>
+            
+            <!-- Bases de datos trabajadas -->
+            <div class="section-title">
+                <i class="fas fa-database"></i> Implementación en Bases de Datos
+            </div>
+            
+            <div class="database-grid">
+                <div class="database-card northwind">
+                    <h3><i class="fas fa-shopping-cart"></i> Northwind Database <span class="trigger-count">5 Triggers</span></h3>
+                    <p>Base de datos de comercio electrónico con productos, clientes y pedidos. Implementamos un sistema completo de auditoría para todas las operaciones CRUD.</p>
+                    <p><strong>Triggers implementados:</strong></p>
+                    <ul class="trigger-list">
+                        <li><strong>TRG_Products_Insert</strong> - Auditoría de nuevos productos</li>
+                        <li><strong>TRG_Products_Update</strong> - Auditoría de cambios en precios</li>
+                        <li><strong>TRG_Products_Delete</strong> - Auditoría de eliminación de productos</li>
+                        <li><strong>TRG_Orders_Insert</strong> - Auditoría de nuevos pedidos</li>
+                        <li><strong>TRG_Orders_Delete</strong> - Auditoría de eliminación de pedidos</li>
+                    </ul>
+                    <p style="margin-top: 15px; font-style: italic; color: #555;">Se agregaron datos iniciales a Categories para pruebas y se corrigió el trigger de eliminación de Orders.</p>
+                </div>
+                
+                <div class="database-card pubs">
+                    <h3><i class="fas fa-book"></i> Pubs Database <span class="trigger-count">5 Triggers</span></h3>
+                    <p>Base de datos de editorial con libros, autores y ventas. Implementamos auditoría para gestionar el ciclo completo de publicaciones.</p>
+                    <p><strong>Triggers implementados:</strong></p>
+                    <ul class="trigger-list">
+                        <li><strong>trg_delete_titles</strong> - Auditoría de eliminación de libros</li>
+                        <li><strong>trg_update_titles</strong> - Auditoría de actualización de precios</li>
+                        <li><strong>trg_insert_titles</strong> - Auditoría de inserción de libros</li>
+                        <li><strong>trg_delete_authors</strong> - Auditoría de eliminación de autores</li>
+                        <li><strong>trg_delete_sales</strong> - Auditoría de eliminación de ventas</li>
+                    </ul>
+                    <p style="margin-top: 15px; font-style: italic; color: #555;">Se respetó la integridad referencial eliminando primero en tablas hijas antes de activar los triggers.</p>
+                </div>
+            </div>
+            
+            <!-- Ejemplo de código actualizado -->
+            <div class="section-title">
+                <i class="fas fa-code"></i> Ejemplo de Trigger Actualizado
+            </div>
+            
+            <div class="card">
+                <div class="card-title">
+                    <i class="fas fa-trash-alt"></i> Trigger para Eliminación de Pedidos (Corregido)
+                </div>
+                <p>Este trigger se activa después de eliminar un pedido en la tabla <span class="highlight">Orders</span> y guarda todos los datos del pedido eliminado en la tabla de auditoría <span class="highlight">Log_DeleteOrders</span>.</p>
+                
+                <div class="code-example">
+                    <span class="comment">-- Creación de tabla de auditoría para eliminación de pedidos</span><br>
+                    <span class="keyword">IF OBJECT_ID</span>(<span class="string">"Log_DeleteOrders"</span>) <span class="keyword">IS NULL</span><br>
+                    <span class="keyword">BEGIN</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">CREATE TABLE</span> Log_DeleteOrders (<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Login <span class="keyword">INT IDENTITY</span>(1,1) <span class="keyword">PRIMARY KEY</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OrderID <span class="keyword">INT</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CustomerID <span class="keyword">NCHAR</span>(5),<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EmployeeID <span class="keyword">INT</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OrderDate <span class="keyword">DATETIME</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RequiredDate <span class="keyword">DATETIME</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ShippedDate <span class="keyword">DATETIME</span>,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DeleteDate <span class="keyword">DATETIME</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;);<br>
+                    <span class="keyword">END</span><br>
+                    <span class="keyword">GO</span><br><br>
+                    
+                    <span class="comment">-- Creación del trigger AFTER DELETE</span><br>
+                    <span class="keyword">CREATE OR ALTER TRIGGER</span> <span class="function">TRG_Orders_Delete</span><br>
+                    <span class="keyword">ON</span> Orders<br>
+                    <span class="keyword">AFTER DELETE</span><br>
+                    <span class="keyword">AS</span><br>
+                    <span class="keyword">BEGIN</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">INSERT INTO</span> Log_DeleteOrders<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;(OrderID, CustomerID, EmployeeID, OrderDate, RequiredDate, ShippedDate, DeleteDate)<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">SELECT</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;d.OrderID, d.CustomerID, d.EmployeeID, d.OrderDate,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;d.RequiredDate, d.ShippedDate, <span class="function">GETDATE</span>()<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">FROM</span> deleted d;<br><br>
+                    
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="function">PRINT</span> <span class="string">'Trigger DELETE en Orders ejecutado.'</span>;<br>
+                    <span class="keyword">END</span>;<br>
+                    <span class="keyword">GO</span>
+                </div>
+            </div>
+            
+            <!-- Lecciones aprendidas -->
+            <div class="section-title">
+                <i class="fas fa-graduation-cap"></i> Lecciones Aprendidas
+            </div>
+            
+            <div class="card">
+                <div class="card-title">
+                    <i class="fas fa-lightbulb"></i> Hallazgos y Soluciones
+                </div>
+                <p>Durante la implementación y corrección de los triggers, identificamos y solucionamos los siguientes desafíos:</p>
+                <ul class="trigger-list" style="margin-top: 15px;">
+                    <li><strong>Integridad referencial:</strong> Los triggers AFTER DELETE fallan si existen restricciones FK. Solución: Eliminar primero registros hijos.</li>
+                    <li><strong>Tipos de datos:</strong> Errores por tipos incompatibles (NCHAR(S)). Solución: Especificar tamaño correcto (NCHAR(5)).</li>
+                    <li><strong>Tablas inserted/deleted:</strong> Entender el scope y contenido de estas tablas virtuales es crucial.</li>
+                    <li><strong>Performance:</strong> Los triggers afectan el rendimiento. Solución: Mantener lógica simple y eficiente.</li>
+                    <li><strong>Transacciones implícitas:</strong> Los triggers se ejecutan dentro de la transacción de la operación que los activa.</li>
+                </ul>
+            </div>
+            
+            <!-- Conclusiones actualizadas -->
+            <div class="section-title">
+                <i class="fas fa-flag-checkered"></i> Conclusiones del Taller (Versión Actualizada)
+            </div>
+            
+            <div class="card conclusion-card">
+                <div class="card-title">
+                    <i class="fas fa-trophy"></i> Logros y Competencias Desarrolladas
+                </div>
+                <p>Este taller nos ha permitido desarrollar competencias avanzadas en el manejo de bases de datos relacionales, específicamente en:</p>
+                <ul class="trigger-list" style="margin-top: 15px;">
+                    <li><strong>Diseño de sistemas de auditoría:</strong> Implementamos <span class="highlight">10 triggers funcionales</span> que registran automáticamente todas las operaciones críticas.</li>
+                    <li><strong>Gestión de integridad de datos:</strong> Aseguramos la consistencia mediante el manejo correcto de restricciones y dependencias.</li>
+                    <li><strong>Resolución de problemas:</strong> Identificamos y corregimos errores en la implementación inicial, mejorando la robustez del sistema.</li>
+                    <li><strong>Documentación técnica:</strong> Generamos informes detallados con código, resultados y explicaciones.</li>
+                    <li><strong>Trabajo en equipo:</strong> Coordinamos eficientemente la división de tareas y la integración de resultados.</li>
+                    <li><strong>Aplicación práctica:</strong> Los sistemas implementados tienen aplicación directa en entornos empresariales reales.</li>
+                </ul>
+                <p style="margin-top: 20px; font-weight: 600; color: #1b5e20;">Los triggers desarrollados constituyen un sistema de auditoría completo que puede implementarse en cualquier base de datos para garantizar trazabilidad, seguridad y control de cambios, cumpliendo con estándares de calidad y mejores prácticas en administración de bases de datos.</p>
+            </div>
+        </div>
+        
+        <!-- Pie de página -->
+        <div class="footer">
+            <h3 style="color: #ffd32a; margin-bottom: 10px;">Taller 3.4 - Triggers en Base de Datos</h3>
+            <p style="margin-bottom: 5px;">Universidad Andina del Cusco | Facultad de Ingeniería y Arquitectura</p>
+            <p style="margin-bottom: 5px;">Modelado de Base de Datos | Docente: Hugo Espetia Huamanga</p>
+            <p style="margin-bottom: 20px; opacity: 0.9;">Versión Actualizada - Diciembre 2025</p>
+            
+            <div class="footer-links">
+                <a href="https://github.com/rivashs00012/Taller-3.4-Triggers.git" class="footer-link" target="_blank">
+                    <i class="fab fa-github"></i> Repositorio GitHub con Código Completo
+                </a>
+                <a href="https://rivashs00012.github.io/Taller-3.4-Triggers/" class="footer-link" target="_blank">
+                    <i class="fas fa-globe"></i> Infografía Online y Documentación
+                </a>
+            </div>
+            
+            <p style="margin-top: 25px; font-size: 0.9rem; opacity: 0.8;">© 2025 - Equipo Los Dogs. Todos los derechos reservados. | Versión 2.0</p>
+        </div>
+    </div>
+    
+    <script>
+        // Efectos de animación mejorados
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.card, .database-card, .team-member');
+            const titles = document.querySelectorAll('.section-title');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                        
+                        // Efecto adicional para títulos
+                        if (entry.target.classList.contains('section-title')) {
+                            entry.target.style.animation = 'titleGlow 1s ease';
+                        }
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(25px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+            
+            titles.forEach(title => {
+                title.style.opacity = '0';
+                title.style.transform = 'translateX(-20px)';
+                title.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(title);
+            });
+            
+            // Efecto para elementos de lista
+            const listItems = document.querySelectorAll('.trigger-list li');
+            listItems.forEach((item, index) => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateX(-10px)';
+                item.style.transition = `opacity 0.3s ease ${index * 0.1}s, transform 0.3s ease ${index * 0.1}s`;
+                
+                setTimeout(() => {
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateX(0)';
+                }, 300 + (index * 100));
+            });
+        });
+        
+        // Agregar estilos para animación de título
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes titleGlow {
+                0% { text-shadow: 0 0 5px rgba(255, 159, 26, 0.5); }
+                50% { text-shadow: 0 0 15px rgba(255, 159, 26, 0.8); }
+                100% { text-shadow: none; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
